@@ -1,0 +1,102 @@
+1.
+
+@Given("I am on the signup page")
+public void navigateToSignupPage() {
+    driver.get("https://magento.softwaretestingboard.com/customer/account/create/");
+}
+
+@When("I enter valid details and submit")
+public void enterValidDetailsAndSubmit() {
+    signupPage.enterFirstName("Sanoj");
+    signupPage.enterLastName("Kumar");
+    signupPage.enterEmail("ksano.kumar.qc@gmail.com");
+    signupPage.enterPassword("Sanoj9457336257");
+    signupPage.clickSubmit();
+}
+
+@Then("my account is created successfully")
+public void verifyAccountCreation() {
+    Assert.assertTrue(signupPage.isAccountCreated());
+}
+
+
+
+2.
+
+public class SignupPage {
+    WebDriver driver;
+
+    @FindBy(id = "firstname")
+    WebElement firstNameField;
+
+    @FindBy(id = "lastname")
+    WebElement lastNameField;
+
+    @FindBy(id = "email_address")
+    WebElement emailField;
+
+    @FindBy(id = "password")
+    WebElement passwordField;
+
+    @FindBy(id = "confirmation")
+    WebElement confirmPasswordField;
+
+    @FindBy(css = ".action.submit.primary")
+    WebElement submitButton;
+
+    public SignupPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+    }
+
+    public void enterFirstName(String firstName) {
+        firstNameField.sendKeys(firstName);
+    }
+
+    public void enterLastName(String lastName) {
+        lastNameField.sendKeys(lastName);
+    }
+
+    public void enterEmail(String email) {
+        emailField.sendKeys(email);
+    }
+
+    public void enterPassword(String password) {
+        passwordField.sendKeys(password);
+        confirmPasswordField.sendKeys(password);
+    }
+
+    public void clickSubmit() {
+        submitButton.click();
+    }
+
+    public boolean isAccountCreated() {
+        return driver.getCurrentUrl().contains("success");
+    }
+}
+
+
+3.
+
+
+Repository Structure and Submission
+Create a GitHub Repository:
+Name it something like MagentoSignupAutomation.
+
+Example Repository Content:
+bash
+Copy code
+MagentoSignupAutomation/
+├── README.md
+├── pom.xml                  # Maven dependencies
+├── src/
+│   ├── test/
+│   │   ├── features/
+│   │   │   ├── signup.feature
+│   │   ├── stepDefinitions/
+│   │   │   ├── SignupSteps.java
+│   │   ├── pageObjects/
+│   │   │   ├── SignupPage.java
+│   │   ├── utils/
+│   │   │   ├── DriverFactory.java
+├── test-output/             # Test reports
